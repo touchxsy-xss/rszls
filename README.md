@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 人生整理师 · 种子版 V0.1
 
-## Getting Started
+人生整理师不是用问题审问一个人，而是帮助一个人慢慢把自己的人生说出来。
 
-First, run the development server:
+一次只打开一扇记忆的门。
+
+整理事实，但保存人的声音。
+
+可以组织叙事，不能创造事实。
+
+AI 可以判断故事潜力，但当事人拥有自己人生的最终解释权。
+
+用户说“不想讲”永远是合法答案。
+
+人生优先于题库。
+
+人生整理师保存记忆，不占有记忆。
+
+用户的人生由用户讲述，也由用户决定谁可以听见。
+
+## 当前状态
+
+已完成 Phase 1–5：Next.js / SQLite 骨架、F0001 种子用户、Day 1–7 问题、邀请码 + PIN、用户授权、Today 页面和独立管理员认证；文字、浏览器录音/本地音频回退、私有照片/视频上传、自由记忆入口与原始素材恢复；AI Provider 适配、严格 MemoryUnit、处理状态、一次重试、管理员审核标记和最多一个自然追问；用户可查看、修改和删除记忆卡，并提交“像不像自己”的研究反馈；管理员可查看用户、原始素材、转写和处理状态，编辑 MemoryUnit、处理追问、覆盖次日问题、记录审核和查看研究指标。未配置 `AI_API_KEY` 时不会伪造转写或事实：文字可用安全规则型整理，只有音频的记录会保持等待转写状态。
+
+处理入口：用户结束一次记录后，在会话页点击“开始 AI 整理”。结果会在同页显示记忆单元、记忆卡入口和最多一个追问；“我的记忆”可查看卡片、编辑标题/内容/隐私、提交反馈或经二次确认删除。管理员可在 `/admin` 查看原始文字、处理状态和已生成的记忆单元，保存人工修订、追问决定、研究审核和次日问题覆盖。
+
+第 7 天作品入口在 `/stories`。只有管理员确认过、且用户设置为“可进入未来作品”的记忆才会进入选择列表；选择 5–7 段后可以保存作品草稿并导出 PDF，导出会记录 `DAY7_PDF_EXPORTED` 事件。记忆列表中的“人物、地点、照片故事、人生事件”支持按已结构化字段筛选。
+
+记忆卡优先保持事实可追溯：真实 AI 配置且原始材料足够时，`summary` 会生成 150–500 字短故事；材料不足或未配置 AI 时，系统保留更短的原文摘要，不会为了满足字数补写不存在的细节。
+
+## 本地启动
+
+需要 Node.js 22+。
 
 ```bash
+cp .env.example .env
+npm install
+npm run db:setup
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+打开 `http://localhost:3000`，输入 `F0001`。首次进入设置 PIN 并完成授权。管理员入口在 `/admin/login`；本地 `.env` 的管理员密码必须在共享测试链接前替换。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 校验命令
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test
+npm run lint
+npm run build
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+更完整的技术选择见 `docs/technical-plan.md`，分阶段任务见 `docs/development-tasks.md`。
